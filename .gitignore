@@ -1,0 +1,7 @@
+dist-newstyle/
+.ghc.environment.*
+*.hi
+*.o
+.env
+.DS_Store
+.playwright-mcp/

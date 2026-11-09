@@ -1,0 +1,54 @@
+cabal-version:      3.0
+name:               sport-faculty
+version:            0.1.0.0
+synopsis:           Sport at the faculty - MySQL information system
+description:        Laboratory work 1: Haskell type classes/instances + MySQL + web UI.
+build-type:         Simple
+
+common warnings
+    ghc-options: -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates
+
+library
+    import:           warnings
+    hs-source-dirs:   src
+    exposed-modules:
+        Config
+        Domain.Model
+        Domain.Validation
+        DB.Entity
+        DB.Instances
+        DB.Repository
+        DB.Queries
+        Web.Forms
+        Web.Views
+        Web.App
+    build-depends:
+        base >=4.17 && <5,
+        blaze-html >=0.9,
+        blaze-markup,
+        bytestring,
+        containers,
+        http-types,
+        io-streams,
+        mtl,
+        mysql-haskell >=1.3.2,
+        resource-pool,
+        scotty >=0.20,
+        text,
+        time,
+        wai,
+        wai-extra,
+        wai-middleware-static
+    default-language: GHC2021
+
+executable sport-faculty
+    import:           warnings
+    hs-source-dirs:   app
+    main-is:          Main.hs
+    ghc-options:      -threaded -rtsopts -with-rtsopts=-N
+    build-depends:
+        base,
+        mysql-haskell,
+        resource-pool,
+        sport-faculty
+    default-language: GHC2021

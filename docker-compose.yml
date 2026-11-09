@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: sport-faculty-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: sport_faculty
+      MYSQL_USER: sport_user
+      MYSQL_PASSWORD: sport_pass
+      TZ: Europe/Kyiv
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - sport_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  sport_mysql_data:
