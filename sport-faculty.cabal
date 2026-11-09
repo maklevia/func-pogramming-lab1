@@ -52,3 +52,17 @@ executable sport-faculty
         resource-pool,
         sport-faculty
     default-language: GHC2021
+
+test-suite spec
+    import:           warnings
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Spec.hs
+    build-depends:
+        base,
+        containers,
+        mysql-haskell,
+        sport-faculty,
+        text,
+        time
+    default-language: GHC2021
