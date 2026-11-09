@@ -8,7 +8,7 @@ import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Time (Day, TimeOfDay, defaultTimeLocale, formatTime)
-import Text.Blaze (AttributeValue, toValue)
+import Text.Blaze (AttributeValue, customAttribute, toValue)
 import Text.Blaze.Html5 (Html, (!), toHtml)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -55,19 +55,21 @@ formatMaybeText = fromMaybe "—"
 
 layout :: Text -> Html -> Html
 layout pageTitle content =
-  H.docTypeHtml $ do
-    H.head $ do
-      H.meta ! A.charset "utf-8"
-      H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1"
-      H.title $ txt (pageTitle <> " | Спорт на факультеті")
-      H.link ! A.rel "icon" ! A.type_ "image/svg+xml" ! A.href "/favicon.svg"
-      H.link ! A.rel "stylesheet" ! A.href "/pico.min.css"
-      H.link ! A.rel "stylesheet" ! A.href "/style.css"
-    H.body $ do
-      navBar
-      H.main ! A.class_ "container" $ do
-        H.h1 $ txt pageTitle
-        content
+  H.docTypeHtml $
+    H.html ! A.lang "uk" ! customAttribute "data-theme" "light" $ do
+      H.head $ do
+        H.meta ! A.charset "utf-8"
+        H.meta ! A.name "color-scheme" ! A.content "light"
+        H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1"
+        H.title $ txt (pageTitle <> " | Спорт на факультеті")
+        H.link ! A.rel "icon" ! A.type_ "image/svg+xml" ! A.href "/favicon.svg"
+        H.link ! A.rel "stylesheet" ! A.href "/pico.min.css"
+        H.link ! A.rel "stylesheet" ! A.href "/style.css"
+      H.body $ do
+        navBar
+        H.main ! A.class_ "container" $ do
+          H.h1 $ txt pageTitle
+          content
 
 navBar :: Html
 navBar =
